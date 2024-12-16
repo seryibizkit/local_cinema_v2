@@ -24,7 +24,7 @@ def get_movies_and_folders(path):
 
 # Верстка приложения
 app.layout = html.Div([
-    dcc.Dropdown(id='movie-dropdown', options=[]),
+    dcc.Dropdown(id='movie-dropdown', options=[], style={'width': '50%'}),
     html.Video(id='video-player', src='', controls=True, style={'height': '50%','width': '50%'}),
     html.Div(id='folder-links', children=[]),
     dcc.Location(id='url', refresh=False)  # Для обработки URL
