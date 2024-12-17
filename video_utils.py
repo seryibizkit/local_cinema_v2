@@ -1,4 +1,6 @@
-import os
+import os, json
+from PIL import Image
+from moviepy import VideoFileClip
 
 
 def video_list(video_path = ""):
@@ -42,3 +44,13 @@ def file_thumbnail(source_path):
         new_image = Image.fromarray(frame)
         new_image.save(new_image_filepath)
         return new_image_filepath
+
+def get_dict_from_file(file_path="static/videos.json"):
+    if not os.path.exists(file_path):
+        return {}  # Возвращаем пустой словарь, если файл не существует
+    with open(file_path, 'r') as file:
+        return json.load(file)
+
+def write_json_file(data, file_path="static/videos.json"):
+    with open(file_path, 'w') as file:
+        json.dump(data, file, indent=4)
