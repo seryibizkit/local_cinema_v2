@@ -19,8 +19,8 @@ def get_movies_and_folders(path):
         movie_path='static/video' + path
     else:
         movie_path='static/video/' + path
-    movies = [f for f in os.listdir(movie_path) if f.endswith(('.mp4', '.webm', '.avi', '.mkv'))]
-    folders = [d for d in os.listdir(movie_path) if os.path.isdir(os.path.join(movie_path, d))]
+    movies = sorted([f for f in os.listdir(movie_path) if f.endswith(('.mp4', '.webm', '.avi', '.mkv'))])
+    folders = sorted([d for d in os.listdir(movie_path) if os.path.isdir(os.path.join(movie_path, d))])
     return movies, folders
 
 
@@ -31,7 +31,7 @@ app.layout = html.Div([
     html.Div(id='folder-links', children=[]),
     dcc.Location(id='url', refresh=False),  # Для обработки URL
     dcc.Interval(id="interval", interval=3000, n_intervals=0)   # Опрос страницы каждые три секундны для сохранения текущего состояния
-    ])
+    ],className="app-body")
 
 
 # Служебный callback для обновления списка папок и фильмов
