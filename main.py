@@ -26,9 +26,10 @@ def get_movies_and_folders(path):
 
 # Верстка приложения
 app.layout = html.Div([
-    dcc.Dropdown(id='movie-dropdown', options=[], style={'width': '50%'}),
-    dp.DashPlayer(id='video-player', url='', controls=True, style={'height': '50%','width': '50%'}),
-    html.Div(id='folder-links', children=[]),
+    html.H1("Добро пожаловать в онлайн-кинотеатр семейства Быстровых"),
+    html.Div(id='folder-links', children=[], style={'text-align': 'center', 'margin-bottom': '20px'}),
+    dp.DashPlayer(id='video-player', url='', controls=True, style={'margin-left': 'auto', 'margin-right': 'auto', 'height': '50%','width': '50%'}),
+    dcc.Dropdown(id='movie-dropdown', options=[], style={'margin-left': 'auto', 'margin-right': 'auto', 'width': '50%'}),
     dcc.Location(id='url', refresh=False),  # Для обработки URL
     dcc.Interval(id="interval", interval=3000, n_intervals=0)   # Опрос страницы каждые три секундны для сохранения текущего состояния
     ],className="app-body")
@@ -43,11 +44,20 @@ def update_movies_and_folders(pathname):
     global current_path
     current_path = pathname
 
+    # "label": html.Span(
+    #                 [
+    #                     html.Img(src="/assets/images/language_icons/julia_50px.svg", height=20),
+    #                     html.Span("Julia", style={'font-size': 15, 'padding-left': 10}),
+    #                 ], style={'align-items': 'center', 'justify-content': 'center'}
+    #             ),
+    #             "value": "Julia",
+    #         },
+
     movies, folders = get_movies_and_folders(current_path)
-    movie_options = [{'label': movie, 'value': movie} for movie in movies]
-    folder_links = [html.A(folder, href=f'/{folder}', style={'margin-right': '10px'}) for folder in folders]
+    movie_options = [{'label': html.Span([html.Span(movie, style={'color': '#1a1a1a'})],style={'align-items': 'center', 'justify-content': 'center'}), 'value': movie} for movie in movies]
+    folder_links = [html.A(folder, href=f'/{folder}', style={'color': '#ffffff','text-decoration': 'none', 'margin': '0 15px'}) for folder in folders]
     if current_path != '/':
-        folder_links.append(html.A("Главная страница",href='/', style={'margin-right': '10px'}))
+        folder_links.append(html.A("Главная страница",href='/', style={'color': '#ffffff','text-decoration': 'none', 'margin': '0 15px'}))
     return movie_options, folder_links
 
 
