@@ -44,16 +44,8 @@ def update_movies_and_folders(pathname):
     global current_path
     current_path = pathname
 
-    # "label": html.Span(
-    #                 [
-    #                     html.Img(src="/assets/images/language_icons/julia_50px.svg", height=20),
-    #                     html.Span("Julia", style={'font-size': 15, 'padding-left': 10}),
-    #                 ], style={'align-items': 'center', 'justify-content': 'center'}
-    #             ),
-    #             "value": "Julia",
-    #         },
-
     movies, folders = get_movies_and_folders(current_path)
+
     movie_options = [{'label': html.Span([html.Span(movie, style={'color': '#1a1a1a'})],style={'align-items': 'center', 'justify-content': 'center'}), 'value': movie} for movie in movies]
     folder_links = [html.A(folder, href=f'/{folder}', style={'color': '#ffffff','text-decoration': 'none', 'margin': '0 15px'}) for folder in folders]
     if current_path != '/':
