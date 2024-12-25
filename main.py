@@ -1,4 +1,5 @@
 import os
+import random
 import dash
 from dash import dcc, html, Input, Output
 import dash_player as dp
@@ -23,13 +24,20 @@ def get_movies_and_folders(path):
     folders = sorted([d for d in os.listdir(movie_path) if os.path.isdir(os.path.join(movie_path, d))])
     return movies, folders
 
+def get_bottom_image(img_path):
+    images = [img for img in os.listdir(img_path)]
+    random_image = random.choice(images)
+    return str(os.path.join(img_path,random_image))
 
-# Верстка приложения
+# Верстка приложения 'assets/compressed/NAEDINE_11.jpg'
 app.layout = html.Div([
     html.H1("Добро пожаловать в онлайн-кинотеатр семейства Быстровых"),
-    html.Div(id='folder-links', children=[], style={'text-align': 'center', 'margin-bottom': '20px'}),
-    dp.DashPlayer(id='video-player', url='', controls=True, style={'margin-left': 'auto', 'margin-right': 'auto', 'height': '50%','width': '50%'}),
-    dcc.Dropdown(id='movie-dropdown', options=[], style={'margin-left': 'auto', 'margin-right': 'auto', 'width': '50%'}),
+    html.Div(id='folder-links', children=[], style={'text-align': 'center', 'margin-bottom': '20px', 'border-bottom': '1px solid #dedada'}),
+    html.Div([
+    dp.DashPlayer(id='video-player', url='', controls=True),
+    dcc.Dropdown(id='movie-dropdown', options=[], style={'width': '55%', 'margin-left': '160px'}),
+    html.Img(id='bottom-image',src='', height='auto', width='35%', style={'margin-left': '10px'})
+    ],style={'display': 'flex', 'flex-direction': 'column', 'align-items': 'center','width': '100%'}),
     dcc.Location(id='url', refresh=False),  # Для обработки URL
     dcc.Interval(id="interval", interval=3000, n_intervals=0)   # Опрос страницы каждые три секундны для сохранения текущего состояния
     ],className="app-body")
@@ -37,7 +45,9 @@ app.layout = html.Div([
 
 # Служебный callback для обновления списка папок и фильмов
 @app.callback(
-    [Output('movie-dropdown', 'options'), Output('folder-links', 'children')],
+    [Output('movie-dropdown', 'options'),
+     Output('folder-links', 'children'),
+     Output('bottom-image', 'src')],
     [Input('url', 'pathname')]
 )
 def update_movies_and_folders(pathname):
@@ -50,7 +60,8 @@ def update_movies_and_folders(pathname):
     folder_links = [html.A(folder, href=f'/{folder}', style={'color': '#ffffff','text-decoration': 'none', 'margin': '0 15px'}) for folder in folders]
     if current_path != '/':
         folder_links.append(html.A("Главная страница",href='/', style={'color': '#ffffff','text-decoration': 'none', 'margin': '0 15px'}))
-    return movie_options, folder_links
+    bottom_img = get_bottom_image('assets/compressed/')
+    return movie_options, folder_links, bottom_img
 
 
 # Обновление плеера при выборе фильма
