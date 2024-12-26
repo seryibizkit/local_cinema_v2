@@ -45,10 +45,11 @@ app.layout = html.Div([
 
 # Служебный callback для обновления списка папок и фильмов
 @app.callback(
-    [Output('movie-dropdown', 'options'),
+    Output('movie-dropdown', 'options'),
      Output('folder-links', 'children'),
-     Output('bottom-image', 'src')],
-    [Input('url', 'pathname')]
+     Output('bottom-image', 'src', allow_duplicate=True),
+    Input('url', 'pathname'),
+    prevent_initial_call=True
 )
 def update_movies_and_folders(pathname):
     global current_path
