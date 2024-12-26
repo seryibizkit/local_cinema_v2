@@ -68,9 +68,11 @@ def update_movies_and_folders(pathname):
 @app.callback(
     Output('video-player', 'url'),
     Output('video-player', 'seekTo'),
+    Output('bottom-image', 'src'),
     Input('movie-dropdown', 'value')
 )
 def display_video(movie):
+    bottom_img = get_bottom_image('assets/compressed/')
     if movie:
         if current_path == '/':
             source_file = os.path.join(home_folder, movie)
@@ -80,8 +82,8 @@ def display_video(movie):
             cur_time = 0
         else:
             cur_time = int(videos_cur_time.get(source_file))
-        return str(source_file), cur_time
-    return "Выберите фильм", 0
+        return str(source_file), cur_time, bottom_img
+    return "Выберите фильм", 0, bottom_img
 
 @app.callback(
     Input('video-player', 'url'),
