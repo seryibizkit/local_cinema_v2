@@ -1,0 +1,39 @@
+body {
+    display: block;
+    font-family: 'Arial', sans-serif;
+    background-color: #101010;
+    color: #203318;
+    margin: 0;
+    align-content: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 5px;
+}
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+.winner {
+    background-color: yellow; /* Цвет выигрышной комбинации */
+    animation: flash 1s infinite;
+}
+
+@keyframes flash {
+    0% { background-color: yellow; }
+    50% { background-color: white; }
+    100% { background-color: yellow; }
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 15px;
+}
