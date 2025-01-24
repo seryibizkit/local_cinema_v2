@@ -35,11 +35,11 @@ app.layout = html.Div([
     html.Div(id='folder-links', children=[], style={'text-align': 'center', 'margin-bottom': '20px', 'border-bottom': '1px solid #dedada'}),
     html.Div([
     dp.DashPlayer(id='video-player', url='', controls=True),
-    dcc.Dropdown(id='movie-dropdown', options=[], style={'width': '55%', 'margin-left': '160px'}),
+    dcc.Dropdown(id='movie-dropdown', options=[], searchable=False, style={'width': '55%', 'margin-left': '160px'}),
     html.Img(id='bottom-image',src='', height='auto', width='35%', style={'margin-left': '10px'})
     ],style={'display': 'flex', 'flex-direction': 'column', 'align-items': 'center','width': '100%'}),
     dcc.Location(id='url', refresh=False),  # Для обработки URL
-    dcc.Interval(id="interval", interval=3000, n_intervals=0)   # Опрос страницы каждые три секундны для сохранения текущего состояния
+    dcc.Interval(id="interval", interval=10000, n_intervals=0)   # Опрос страницы каждые 10 секундны для сохранения текущего состояния
     ],className="app-body")
 
 
@@ -61,6 +61,7 @@ def update_movies_and_folders(pathname):
     folder_links = [html.A(folder, href=f'/{folder}', style={'color': '#ffffff','text-decoration': 'none', 'margin': '0 15px'}) for folder in folders]
     if current_path != '/':
         folder_links.append(html.A("Главная страница",href='/', style={'color': '#ffffff','text-decoration': 'none', 'margin': '0 15px'}))
+    folder_links.append(html.A("Крестики-нолики", href="/assets/OX/main.html", style={'color': '#ffffff','text-decoration': 'none', 'margin': '0 15px'}))
     bottom_img = get_bottom_image('assets/compressed/')
     return movie_options, folder_links, bottom_img
 
