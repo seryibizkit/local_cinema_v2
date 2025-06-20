@@ -99,4 +99,4 @@ def save_current_time(src_movie, current_time, n):
 
 # Запуск сервера
 if __name__ == '__main__':
-    app.run_server(host='192.168.0.110', port=7777, debug=True)
+    app.run(host='192.168.0.110', port=7777, debug=True)
